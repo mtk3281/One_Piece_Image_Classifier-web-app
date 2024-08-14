@@ -25,7 +25,7 @@ This web application is a One Piece image classifier built with Python and Flask
 1. **Clone the Repository**
 
     ```sh
-    git clone https://github.com/mtk3281/One_Piece_Image_Classifier-web-app/
+    git clone https://github.com/mtk3281/One_Piece_Image_Classifier-web-app.git
     ```
 
 2. **Create and Activate a Virtual Environment**
