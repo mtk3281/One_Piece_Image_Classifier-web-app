@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>One Piece Image Classifier</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            display: flex;
+            width: 100%;
+            max-width: 1200px;
+        }
+        .left-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding-right: 20px;
+        }
+        .right-section {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        .upload-container {
+            border: 2px dashed #007bff;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            width: 300px;
+            height: 185px;
+            display: flex;
+            align-items: center; /* Center vertically */
+            justify-content: center; /* Center horizontally */
+            overflow: hidden;
+            position: relative; /* Ensure positioning context for the img element */
+        }
+
+.upload-container img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain; /* Keep the aspect ratio of the image */
+}
+
+        .buttons {
+            margin-top: 20px;
+        }
+        .buttons button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            margin: 10px;
+            cursor: pointer;
+        }
+        .submit-btn {
+            background-color: #28a745;
+            color: white;
+        }
+        .clear-btn {
+            background-color: #dc3545;
+            color: white;
+        }
+        .result-container {
+            display: flex;
+            align-items: flex-start;
+            margin-top: 40px;
+            width: 100%;
+        }
+        .line {
+            border-left: 2px solid #ccc;
+            height: 100%;
+            margin: 0 20px;
+        }
+        .space {
+    
+            height: 100%;
+            margin: 0 40px;
+        }
+        .predictions {
+            text-align: left;
+        }
+        .result-image {
+            width: 300px;
+            height: 300px;
+            overflow: hidden;
+            border: 2px solid #007bff;
+            border-radius: 10px;
+        }
+        .result-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left-section">
+            <h1>One Piece Image Classifier</h1>
+        
+            <form method="POST" enctype="multipart/form-data">
+                <div class="upload-container" onclick="document.getElementById('fileInput').click();">
+                    <img src="{{ url_for('static', filename='upload_image_placeholder.jpg') }}" alt="Upload an image" id="uploadedImage">
+                </div>
+                <input type="file" name="file" id="fileInput" style="display: none;" onchange="previewImage(event)" accept="image/*"> <!-- accept attribute for image files only -->
+        
+                <div class="buttons">
+                    <button type="submit" class="submit-btn">Submit</button>
+                    <button type="button" class="clear-btn" onclick="window.location.href='/clear'">Clear</button>
+                </div>
+            </form>
+        </div>
+        
+        <div class="right-section">
+            <div class="result-container">
+                <div class="line"></div>
+                <div class="result-image">
+                    {% if image %}
+                        <img src="{{ url_for('static', filename=image) }}" alt="Uploaded image">
+                    {% else %}
+                        <pre> <b>  No image uploaded yet</b>  </pre> <!-- Placeholder message when no image is uploaded -->
+                    {% endif %}
+                </div>
+                <div class="space"></div>
+                <div id="result">
+                    {% if predictions %}
+                        <h2>Predictions:</h2>
+                        <ul class="predictions">
+                            {% for label, prob in predictions %}
+                                <li><strong>{{ label }}</strong>: {{ prob }}</li>
+                            {% endfor %}
+                        </ul>
+                        <h2>Top Prediction: {{ predicted_label }} with probability {{ '%.3f' | format(predicted_prob) }}</h2>
+                    {% elif error %}
+                        <p style="color: red;">{{ error }}</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+    <script>
+        function previewImage(event) {
+            const reader = new FileReader();
+            reader.onload = function(){
+                const output = document.getElementById('uploadedImage');
+                output.src = reader.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
+</body>
+</html>
