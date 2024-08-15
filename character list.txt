@@ -1,18 +1,1 @@
-Ace 
-Akainu
-Brook 
-Chopper
-Crocodile
-Franky
-Jinbei
-Kurohige
-Law
-Luffy
-Mihawk
-Nami
-Rayleigh
-Robin
-Sanji
-Shanks
-Usopp
-Zoro
+'Brook', 'Chopper', 'Franky', 'Jinbei', 'Luffy', 'Nami', 'Robin', 'Sanji', 'Usopp', 'Zoro'
