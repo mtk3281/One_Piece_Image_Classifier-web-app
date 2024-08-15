@@ -1,3 +1,9 @@
+.git/
+.dockerignore
+.gitattributes.txt
+.gitignore.txt
+app fastai.py
+character list.txt
+op_93%acc.pkl
 op_95%acc.pkl
-myenv/
-
+working_dockerfile.txt
